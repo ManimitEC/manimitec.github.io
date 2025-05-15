@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identity Management Solutions Comparison</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5; /* Light gray background */
+            color: #333; /* Dark gray text */
+        }
+        .navbar {
+            background-color: #ff6600 !important; /* Orange navbar */
+        }
+        .navbar-brand {
+            color: #fff !important; /* White text for navbar brand */
+        }
+        .card {
+            background-color: #e6e6e6; /* Light gray card background */
+            border: 1px solid #ccc; /* Gray border */
+        }
+        .card-title {
+            color: #ff6600; /* Orange card title */
+        }
+        .badge {
+            background-color: #ff6600; /* Orange badges */
+            color: #fff; /* White text for badges */
+        }
+        th {
+            background-color: #ff6600; /* Orange table header */
+            color: #fff; /* White text for table header */
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f2f2f2; /* Light gray for striped rows */
+        }
+        footer {
+            background-color: #e6e6e6; /* Light gray footer */
+            color: #333; /* Dark gray text */
+        }
+        .card-img-top { height: 100px; object-fit: contain; padding: 10px; }
+        th { white-space: nowrap; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Identity Management Solutions Comparison</span>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <p>This page compares open-source identity management and authentication solutions, focusing on their suitability for Python Flask-based projects in terms of compatibility, scalability, and feature robustness.</p>
+    </div>
+
+    <div class="container mt-4">
+        <h2>Tool Overview</h2>
+        <div id="toolCards" class="row"></div>
+    </div>
+
+    <div class="container mt-4">
+        <h2>Comparison Table</h2>
+        <div id="comparisonTable" class="table-responsive"></div>
+    </div>
+
+    <div class="container mt-4">
+        <h2>Comparison Report</h2>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#reportCollapse" aria-expanded="false" aria-controls="reportCollapse">
+            Show Report
+        </button>
+        <div class="collapse" id="reportCollapse">
+            <div class="card card-body mt-3">
+                <p>This analysis assesses nine open-source identity management and authentication solutions for Python Flask projects, emphasizing seamless integration, scalability for microservices, and robust feature sets tailored to various use cases.</p>
+                <h3>Key Findings</h3>
+                <ul>
+                    <li><strong>Keycloak</strong> and <strong>Gluu Server</strong> stand out as enterprise-grade IAM solutions with comprehensive protocol support (OAuth2, OIDC, SAML) and extensive integrations, making them ideal for large-scale Flask applications, though their deployment complexity may deter smaller projects.</li>
+                    <li><strong>Flask-RBAC</strong> and <strong>Casbin</strong> offer lightweight, Python-native options perfect for small Flask projects requiring simple RBAC or ABAC, but they fall short in enterprise scalability and support.</li>
+                    <li><strong>Permify</strong> and <strong>OpenFGA</strong> deliver scalable, Zanzibar-inspired authorization systems, excelling in fine-grained access control for Flask applications, particularly in distributed environments.</li>
+                    <li><strong>Warrant</strong> and <strong>ORY Hydra</strong> provide modern OAuth2/OIDC authentication, striking a balance between ease of use and cloud-native scalability, suitable for Flask’s evolving needs.</li>
+                    <li><strong>Apache Syncope</strong> shines in identity provisioning for Flask enterprises, offering robust REST APIs, though its setup complexity may challenge smaller teams.</li>
+                </ul>
+                <h3>Flask Compatibility</h3>
+                <p><strong>Flask-RBAC</strong> and <strong>Casbin</strong> integrate effortlessly with Flask’s ecosystem, leveraging Python-native designs and libraries like SQLAlchemy. <strong>Keycloak</strong>, <strong>Gluu Server</strong>, and <strong>ORY Hydra</strong> connect via flask-oidc for OIDC support, while <strong>Permify</strong>, <strong>OpenFGA</strong>, and <strong>Apache Syncope</strong> rely on REST APIs, offering flexibility through HTTP clients like requests or httpx.</p>
+                <h3>Recommendations</h3>
+                <ul>
+                    <li><strong>Small-Scale Projects</strong>: Opt for <strong>Flask-RBAC</strong> (simple RBAC, zero cost) or <strong>Casbin</strong> (versatile authorization, Python-first) for rapid, lightweight implementations.</li>
+                    <li><strong>Enterprise Applications</strong>: Choose <strong>Keycloak</strong> or <strong>Gluu Server</strong> for full-featured IAM, SSO, and enterprise-grade support, despite their steeper setup curve.</li>
+                    <li><strong>Scalable Authorization Needs</strong>: Select <strong>Permify</strong> or <strong>OpenFGA</strong> for advanced, distributed access control in Flask microservices.</li>
+                    <li><strong>Modern Authentication</strong>: Use <strong>Warrant</strong> or <strong>ORY Hydra</strong> for cutting-edge OAuth2/OIDC solutions in cloud-native Flask deployments.</li>
+                </ul>
+                <h3>Conclusion</h3>
+                <p>For small, cost-sensitive Flask projects, <strong>Flask-RBAC</strong> or <strong>Casbin</strong> are top picks. Enterprises should lean toward <strong>Keycloak</strong> or <strong>Gluu Server</strong> for robust IAM. For scalable authorization, <strong>Permify</strong> or <strong>OpenFGA</strong> excel, while <strong>Warrant</strong> and <strong>ORY Hydra</strong> lead in modern authentication. Assess your project’s size, technical demands, and budget to choose the best fit.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-4">
+        <p>Last updated: May 15, 2025</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const toolsData = [
+            {
+                name: "Permify",
+                logo: "https://permify.co/images/logo/main-logo.svg",
+                website: { description: "<a href='https://permify.co/' target='_blank'>Permify</a>", stars: "" },
+                github: { description: "<a href='https://github.com/Permify/permify/' target='_blank'>Permify GitHub</a>", stars: ""},
+                primaryFunction: { description: "Zanzibar-inspired authorization for fine-grained access control, ideal for Flask via REST API.", stars: "" },
+                protocolSupport: { description: "API-driven (REST), integrates with Flask via HTTP requests.", stars: "★★★☆☆" },
+                deployment: { description: "Self-hosted with Docker, suits Flask cloud deployments.", stars: "★★★★☆" },
+                language: { description: "Go, accessible from Flask via APIs.", stars: "★★★☆☆" },
+                license: { description: "Apache 2.0, permissive for Flask projects.", stars: "★★★★☆" },
+                githubStars: { description: "~1.7k", stars: "★★★☆☆" },
+                githubContributors: { description: "50+", stars: "★★★☆☆" },
+                communityActivity: { description: "Moderate, with active GitHub issues for Flask support.", stars: "★★★☆☆" },
+                documentation: { description: "Comprehensive guides with Flask examples.", stars: "★★★★☆" },
+                integrations: { description: "REST API, SDKs for Flask HTTP clients.", stars: "★★★★☆" },
+                enterpriseSupport: { description: "Commercial tiers for Flask enterprises.", stars: "★★★★☆" },
+                pricing: { description: "Open Source + Paid Cloud, cost-effective for Flask.", stars: "★★★★☆" },
+                scalability: { description: "High, scales for Flask microservices.", stars: "★★★★☆" },
+                architectureWorkflows: { description: "<a href='https://permify.co/post/permify-1.0-now-available/' target='_blank'>Permify Architecture & Workflows</a>", stars: "" }
+            },
+            {
+                name: "Warrant",
+                logo: "https://warrant.dev/images/logo-primary.svg",
+                website: { description: "<a href='https://warrant.dev/' target='_blank'>Warrant</a>", stars: "" },
+                github: { description: "<a href='https://github.com/warrant-dev/warrant/' target='_blank'>Warrant GitHub</a>", stars: ""},
+                primaryFunction: { description: "Authorization and authentication, good for Flask login and permissions.", stars: "" },
+                protocolSupport: { description: "OAuth2, OIDC, integrates with Flask via flask-oidc.", stars: "★★★★☆" },
+                deployment: { description: "Self-hosted with Docker, Flask-compatible.", stars: "★★★★☆" },
+                language: { description: "Go, TypeScript, with Flask API support.", stars: "★★★☆☆" },
+                license: { description: "MIT, flexible for Flask.", stars: "★★★★☆" },
+                githubStars: { description: "~2.1k", stars: "★★★☆☆" },
+                githubContributors: { description: "30+", stars: "★★★☆☆" },
+                communityActivity: { description: "Moderate, supports Flask developers.", stars: "★★★☆☆" },
+                documentation: { description: "Good OAuth2 guides for Flask.", stars: "★★★☆☆" },
+                integrations: { description: "Node.js, Go SDKs, Flask via REST.", stars: "★★★★☆" },
+                enterpriseSupport: { description: "Enterprise support for Flask deployments.", stars: "★★★★☆" },
+                pricing: { description: "Open Source + Paid SaaS, flexible for Flask.", stars: "★★★★☆" },
+                scalability: { description: "High, suits cloud-native Flask apps.", stars: "★★★★☆" },
+                architectureWorkflows: { description: "<a href='https://warrant.dev/' target='_blank'>Warrant Architecture & Workflows</a>", stars: "" }
+            },
+            {
+                name: "Keycloak",
+                logo: "https://www.keycloak.org/resources/images/icon.svg",
+                website: { description: "<a href='https://www.keycloak.org/' target='_blank'>Keycloak</a>", stars: "" },
+                github: { description: "<a href='https://github.com/keycloak/keycloak/' target='_blank'>Keycloak GitHub</a>", stars: ""},
+                primaryFunction: { description: "IAM with SSO, ideal for enterprise Flask apps.", stars: "" },
+                protocolSupport: { description: "OAuth2, OIDC, SAML, Flask via flask-oidc.", stars: "★★★★★" },
+                deployment: { description: "Self-hosted, Kubernetes, Docker, complex for Flask.", stars: "★★★★☆" },
+                language: { description: "Java, Flask via REST APIs.", stars: "★★★☆☆" },
+                license: { description: "Apache 2.0, permissive for Flask.", stars: "★★★★☆" },
+                githubStars: { description: "~25k", stars: "★★★★★" },
+                githubContributors: { description: "500+", stars: "★★★★★" },
+                communityActivity: { description: "High, Red Hat-backed, supports Flask users.", stars: "★★★★★" },
+                documentation: { description: "Extensive, with Flask OIDC guides.", stars: "★★★★★" },
+                integrations: { description: "LDAP, Kerberos, social IdPs, Flask-friendly.", stars: "★★★★★" },
+                enterpriseSupport: { description: "Red Hat subscriptions for Flask enterprises.", stars: "★★★★★" },
+                pricing: { description: "Open Source + Subscriptions, suits large Flask apps.", stars: "★★★★☆" },
+                scalability: { description: "High, for enterprise Flask apps.", stars: "★★★★★" },
+                architectureWorkflows: { description: "<a href='https://wjw465150.gitbooks.io/keycloak-documentation/content/authorization_services/topics/overview/architecture.html' target='_blank'>Keycloak Architecture & Workflows</a>", stars: "" }
+            },
+            {
+                name: "Casbin",
+                logo: "https://casbin.org/img/casbin.svg",
+                website: { description: "<a href='https://casbin.org/' target='_blank'>Casbin</a>", stars: "" },
+                github: { description: "<a href='https://github.com/casbin/casbin/' target='_blank'>Casbin GitHub</a>", stars: ""},
+                primaryFunction: { description: "Authorization library for RBAC/ABAC, Flask-friendly.", stars: "" },
+                protocolSupport: { description: "Library-based, Flask route integration.", stars: "★★☆☆☆" },
+                deployment: { description: "Embedded in Flask, no external setup.", stars: "★★★★★" },
+                language: { description: "Python support, ideal for Flask.", stars: "★★★★★" },
+                license: { description: "Apache 2.0, flexible for Flask.", stars: "★★★★☆" },
+                githubStars: { description: "~26k", stars: "★★★★★" },
+                githubContributors: { description: "200+", stars: "★★★★☆" },
+                communityActivity: { description: "High, with Python/Flask support.", stars: "★★★★☆" },
+                documentation: { description: "Clear Python examples for Flask.", stars: "★★★★☆" },
+                integrations: { description: "Flask with SQLAlchemy, MongoDB.", stars: "★★★★☆" },
+                enterpriseSupport: { description: "No, OSS only, limits Flask enterprises.", stars: "★☆☆☆☆" },
+                pricing: { description: "Fully Open Source, free for Flask.", stars: "★★★★★" },
+                scalability: { description: "Library-bound, good for small Flask apps.", stars: "★★★☆☆" },
+                architectureWorkflows: { description: "<a href='https://articles.wesionary.team/understanding-casbin-with-different-access-control-model-configurations-faebc60f6da5' target='_blank'>Casbin Architecture & Workflows</a>", stars: "" }
+            },
+            {
+                name: "OpenFGA",
+                logo: "https://openfga.dev/img/openfga_logo.svg",
+                website: { description: "<a href='https://openfga.dev/' target='_blank'>OpenFGA</a>", stars: "" },
+                github: { description: "<a href='https://github.com/openfga/openfga/' target='_blank'>OpenFGA GitHub</a>", stars: ""},
+                primaryFunction: { description: "Zanzibar-based authorization, scalable for Flask.", stars: "" },
+                protocolSupport: { description: "REST/gRPC, Flask via Python clients.", stars: "★★★☆☆" },
+                deployment: { description: "Self-hosted with Docker, Flask-compatible.", stars: "★★★★☆" },
+                language: { description: "Go, Flask via APIs.", stars: "★★★☆☆" },
+                license: { description: "Apache 2.0, permissive for Flask.", stars: "★★★★☆" },
+                githubStars: { description: "~300", stars: "★★☆☆☆" },
+                githubContributors: { description: "20+", stars: "★★☆☆☆" },
+                communityActivity: { description: "Low to Moderate, growing for Flask.", stars: "★★★☆☆" },
+                documentation: { description: "Good guides, Flask API examples.", stars: "★★★★☆" },
+                integrations: { description: "REST/gRPC, Flask via Python libraries.", stars: "★★★★☆" },
+                enterpriseSupport: { description: "FGA Cloud for Flask projects.", stars: "★★★★☆" },
+                pricing: { description: "Open Source + Paid Cloud, good for Flask.", stars: "★★★★☆" },
+                scalability: { description: "High, for distributed Flask apps.", stars: "★★★★☆" },
+                architectureWorkflows: { description: "<a href='https://openfga.dev/docs/fga' target='_blank'>OpenFGA Architecture & Workflows</a>", stars: "" }
+            },
+            {
+                name: "Flask-RBAC",
+                logo: "https://flask.palletsprojects.com/en/stable/_images/flask-horizontal.png",
+                website: { description: "<a href='https://flask-rbac.readthedocs.io/' target='_blank'>Flask-RBAC</a>", stars: "" },
+                github: { description: "<a href='https://github.com/shonenada/flask-rbac/' target='_blank'>Flask-RBAC GitHub</a>", stars: ""},
+                primaryFunction: { description: "Role-based access control for Flask apps.", stars: "" },
+                protocolSupport: { description: "Flask decorators, no protocols.", stars: "★☆☆☆☆" },
+                deployment: { description: "Embedded in Flask, simple setup.", stars: "★★★★★" },
+                language: { description: "Python, Flask-native.", stars: "★★★★★" },
+                license: { description: "MIT, flexible for Flask.", stars: "★★★★☆" },
+                githubStars: { description: "~150", stars: "★★☆☆☆" },
+                githubContributors: { description: "10+", stars: "★★☆☆☆" },
+                communityActivity: { description: "Low, basic Flask support.", stars: "★★☆☆☆" },
+                documentation: { description: "Basic Flask examples.", stars: "★★★☆☆" },
+                integrations: { description: "Flask-Login, SQLAlchemy.", stars: "★★★☆☆" },
+                enterpriseSupport: { description: "No, OSS only, not for Flask enterprises.", stars: "★☆☆☆☆" },
+                pricing: { description: "Fully Open Source, free for Flask.", stars: "★★★★★" },
+                scalability: { description: "Limited, for small Flask apps.", stars: "★★☆☆☆" },
+                architectureWorkflows: { description: "<a href='https://flask-rbac.readthedocs.io/en/latest/' target='_blank'>Flask-RBAC Architecture & Workflows</a>", stars: "" }
+            },
+            {
+                name: "Apache Syncope",
+                logo: "https://syncope.apache.org/images/apache-syncope-logo-medium.png",
+                website: { description: "<a href='https://syncope.apache.org/' target='_blank'>Apache Syncope</a>", stars: "" },
+                github: { description: "<a href='https://github.com/apache/syncope/' target='_blank'>Apache Syncope GitHub</a>", stars: ""},
+                primaryFunction: { description: "Identity management for provisioning, suits Flask enterprises.", stars: "" },
+                protocolSupport: { description: "REST API, Flask via HTTP clients.", stars: "★★★☆☆" },
+                deployment: { description: "Self-hosted, complex for Flask.", stars: "★★★☆☆" },
+                language: { description: "Java, Flask via REST APIs.", stars: "★★★☆☆" },
+                license: { description: "Apache 2.0, permissive for Flask.", stars: "★★★★☆" },
+                githubStars: { description: "~2k", stars: "★★★☆☆" },
+                githubContributors: { description: "~100", stars: "★★★☆☆" },
+                communityActivity: { description: "High, Apache-backed, Flask support.", stars: "★★★★☆" },
+                documentation: { description: "Comprehensive, Flask REST guides.", stars: "★★★★☆" },
+                integrations: { description: "Connectors, Flask via APIs.", stars: "★★★★☆" },
+                enterpriseSupport: { description: "Commercial support for Flask.", stars: "★★★★☆" },
+                pricing: { description: "Open Source, paid support for Flask.", stars: "★★★★☆" },
+                scalability: { description: "High, for large Flask apps.", stars: "★★★★☆" },
+                architectureWorkflows: { description: "<a href='https://syncope.apache.org/docs/3.0/reference-guide.html' target='_blank'>Apache Syncope Architecture & Workflows</a>", stars: "" }
+            },
+            {
+                name: "ORY Hydra",
+                logo: "https://cdn.sanity.io/images/33xluxe1/production/4a74c3284448077b67e1b52b47b92b67217781cb-44x16.svg?w=44&h=16",
+                website: { description: "<a href='https://www.ory.sh/hydra/' target='_blank'>ORY Hydra</a>", stars: "" },
+                github: { description: "<a href='https://github.com/ory/hydra/' target='_blank'>ORY Hydra GitHub</a>", stars: ""},
+                primaryFunction: { description: "OAuth2/OIDC provider, cloud-native for Flask.", stars: "" },
+                protocolSupport: { description: "OAuth2, OIDC, Flask via flask-oidc.", stars: "★★★★☆" },
+                deployment: { description: "Self-hosted, Docker/Kubernetes, Flask-friendly.", stars: "★★★★☆" },
+                language: { description: "Go, Flask via SDKs/APIs.", stars: "★★★☆☆" },
+                license: { description: "Apache 2.0, permissive for Flask.", stars: "★★★★☆" },
+                githubStars: { description: "~5k", stars: "★★★★☆" },
+                githubContributors: { description: "~50", stars: "★★★☆☆" },
+                communityActivity: { description: "High, supports Flask developers.", stars: "★★★★☆" },
+                documentation: { description: "Good OAuth2/OIDC guides for Flask.", stars: "★★★★☆" },
+                integrations: { description: "Python SDKs, Flask-compatible.", stars: "★★★★☆" },
+                enterpriseSupport: { description: "Paid cloud/support for Flask.", stars: "★★★★☆" },
+                pricing: { description: "Open Source + Paid Cloud, suits Flask.", stars: "★★★★☆" },
+                scalability: { description: "High, for cloud Flask apps.", stars: "★★★★☆" },
+                architectureWorkflows: { description: "<a href='https://www.ory.sh/docs/hydra/' target='_blank'>ORY Hydra Architecture & Workflows</a>", stars: "" }
+            },
+            {
+                name: "Gluu Server",
+                logo: "https://gluu.org/favicon.ico",
+                website: { description: "<a href='https://gluu.org/' target='_blank'>Gluu Server</a>", stars: "" },
+                github: { description: "<a href='https://github.com/GluuFederation/gluu4/' target='_blank'>Gluu Server GitHub</a>", stars: ""},
+                primaryFunction: { description: "IAM with multi-protocol support, for Flask enterprises.", stars: "" },
+                protocolSupport: { description: "OAuth2, OIDC, SAML, UMA, Flask via flask-oidc.", stars: "★★★★★" },
+                deployment: { description: "Self-hosted, Docker/Kubernetes, complex for Flask.", stars: "★★★★☆" },
+                language: { description: "Java, Python, Flask-compatible.", stars: "★★★★☆" },
+                license: { description: "Apache 2.0, MIT, flexible for Flask.", stars: "★★★★☆" },
+                githubStars: { description: "~400", stars: "★★☆☆☆" },
+                githubContributors: { description: "~50", stars: "★★★☆☆" },
+                communityActivity: { description: "Moderate, Flask support via forums.", stars: "★★★☆☆" },
+                documentation: { description: "Extensive, Flask protocol guides.", stars: "★★★★★" },
+                integrations: { description: "IdPs, apps, Flask via Python tools.", stars: "★★★★★" },
+                enterpriseSupport: { description: "Paid support for Flask enterprises.", stars: "★★★★★" },
+                pricing: { description: "Open Source + Paid Support, for large Flask apps.", stars: "★★★★☆" },
+                scalability: { description: "High, for enterprise Flask apps.", stars: "★★★★★" },
+                architectureWorkflows: { description: "<a href='https://gluu.org/docs/gluu-server/4.5/introduction/architecture/' target='_blank'>Gluu Server Architecture & Workflows</a>", stars: "" }
+            }
+        ];
+        const categories = {
+            'Functionality': ['protocolSupport', 'deployment', 'scalability'],
+            'Integration': ['language', 'integrations'],
+            'Community': ['githubStars', 'githubContributors', 'communityActivity'],
+            'Support': ['documentation', 'enterpriseSupport'],
+            'Cost': ['license', 'pricing']
+        };
+
+        function starsToNumber(stars) {
+            return stars ? stars.split('★').length - 1 : 0;
+        }
+
+        function calculateCategoryAverages(tool) {
+            const averages = {};
+            for (const [category, features] of Object.entries(categories)) {
+                let sum = 0;
+                let count = 0;
+                for (const feature of features) {
+                    if (tool[feature] && tool[feature].stars) {
+                        sum += starsToNumber(tool[feature].stars);
+                        count++;
+                    }
+                }
+                averages[category] = count > 0 ? (sum / count).toFixed(1) : 'N/A';
+            }
+            return averages;
+        }
+
+        function renderCards(data) {
+            const cardsContainer = document.getElementById('toolCards');
+            cardsContainer.innerHTML = '';
+            data.forEach(tool => {
+                const averages = calculateCategoryAverages(tool);
+                const cardHTML = `
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <img src="${tool.logo}" class="card-img-top" alt="${tool.name} Logo">
+                            <div class="card-body">
+                                <h5 class="card-title">${tool.name}</h5>
+                                <ul class="list-unstyled">
+                                    ${Object.entries(averages).map(([category, average]) => `<li><strong>${category}:</strong> ${average}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cardsContainer.innerHTML += cardHTML;
+            });
+        }
+
+        function getStarColor(starCount) {
+            switch (starCount) {
+                case 1: return '#ff4d4d'; // Bright red
+                case 2: return '#ff9900'; // Bright orange
+                case 3: return '#ffd700'; // Bright yellow
+                case 4: return '#66cc66'; // Bright green
+                case 5: return '#009933'; // Dark green
+                default: return '#cccccc'; // Light gray
+            }
+        }
+
+        function renderTable(data) {
+            const featureKeys = [
+                'website', 'github',
+                'primaryFunction', 'protocolSupport', 'deployment', 'language', 'license',
+                'githubStars', 'githubContributors', 'communityActivity', 'documentation',
+                'integrations', 'enterpriseSupport', 'pricing', 'scalability', 'architectureWorkflows'
+            ];
+            let tableHTML = `
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Feature</th>
+                            ${data.map(tool => `<th scope="col">${tool.name}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            featureKeys.forEach(feature => {
+                const hasStars = data.some(tool => tool[feature]?.stars);
+                tableHTML += `
+                    <tr>
+                        <th scope="row" ${hasStars ? `id="${feature}Feature" style="cursor: pointer;"` : ''}>
+                            ${feature.replace(/([A-Z])/g, ' $1').trim()}
+                            ${hasStars ? '<span class="ms-1">↓</span>' : ''}
+                        </th>
+                        ${data.map(tool => {
+                            const starCount = starsToNumber(tool[feature]?.stars || '');
+                            const starColor = getStarColor(starCount);
+                            return `
+                                <td>
+                                    ${tool[feature]?.description || ''}
+                                    ${tool[feature]?.stars ? `<br><span class="badge" style="background-color: ${starColor};">${tool[feature].stars}</span>` : ''}
+                                </td>
+                            `;
+                        }).join('')}
+                    </tr>
+                `;
+            });
+            tableHTML += '</tbody></table>';
+            document.getElementById('comparisonTable').innerHTML = tableHTML;
+
+            // Add event listeners for sorting
+            featureKeys.forEach(feature => {
+                const hasStars = data.some(tool => tool[feature]?.stars);
+                if (hasStars) {
+                    const featureElement = document.getElementById(`${feature}Feature`);
+                    if (featureElement) {
+                        featureElement.addEventListener('click', () => {
+                            const sortedData = [...data].sort((a, b) => {
+                                const starsA = starsToNumber(a[feature]?.stars || '');
+                                const starsB = starsToNumber(b[feature]?.stars || '');
+                                return starsB - starsA; // Sort in descending order
+                            });
+                            renderTable(sortedData);
+                        });
+                    }
+                }
+            });
+        }
+
+        renderCards(toolsData);
+        renderTable(toolsData);
+    </script>
+</body>
+</html>
