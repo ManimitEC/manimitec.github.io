@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Identity Management Solutions Comparison</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             background-color: #f5f5f5; /* Light gray background */
@@ -40,12 +41,56 @@
         }
         .card-img-top { height: 100px; object-fit: contain; padding: 10px; }
         th { white-space: nowrap; }
+
+        .dark-mode {
+            background-color: #333;
+            color: #f5f5f5;
+        }
+        .dark-mode .navbar {
+            background-color: #444 !important;
+        }
+        .dark-mode .navbar-brand {
+            color: #ff6600 !important;
+        }
+        .dark-mode .card {
+            background-color: #444;
+            border: 1px solid #555;
+            color: #f5f5f5;
+        }
+        .dark-mode .card-title {
+            color: #ff6600;
+        }
+        .dark-mode th {
+            background-color: #555;
+            color: #ff6600;
+        }
+        .dark-mode td {
+            background-color: #444;
+            color: #f5f5f5;
+        }
+        .dark-mode .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #555;
+        }
+        .dark-mode .table-bordered {
+            border-color: #666;
+        }
+        .dark-mode footer {
+            background-color: #222;
+            color: #ccc;
+            border-top: 1px solid #555;
+        }
+        .dark-mode footer p {
+            color: #ccc;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1">Identity Management Solutions Comparison</span>
+            <button class="btn btn-outline-secondary" onclick="toggleTheme()">
+                <i id="themeIcon" class="bi bi-sun-fill"></i>
+            </button>
         </div>
     </nav>
 
@@ -70,32 +115,38 @@
         </button>
         <div class="collapse" id="reportCollapse">
             <div class="card card-body mt-3">
-                <p>This analysis assesses nine open-source identity management and authentication solutions for Python Flask projects, emphasizing seamless integration, scalability for microservices, and robust feature sets tailored to various use cases.</p>
-                <h3>Key Findings</h3>
+                <p>This analysis evaluates nine open-source identity management and authentication solutions for Python Flask projects, prioritizing seamless integration, scalability for microservices, and robust features tailored to diverse use cases.</p>
+                <h3>Key Findings and Verdicts</h3>
                 <ul>
-                    <li><strong>Keycloak</strong> and <strong>Gluu Server</strong> stand out as enterprise-grade IAM solutions with comprehensive protocol support (OAuth2, OIDC, SAML) and extensive integrations, making them ideal for large-scale Flask applications, though their deployment complexity may deter smaller projects.</li>
-                    <li><strong>Flask-RBAC</strong> and <strong>Casbin</strong> offer lightweight, Python-native options perfect for small Flask projects requiring simple RBAC or ABAC, but they fall short in enterprise scalability and support.</li>
-                    <li><strong>Permify</strong> and <strong>OpenFGA</strong> deliver scalable, Zanzibar-inspired authorization systems, excelling in fine-grained access control for Flask applications, particularly in distributed environments.</li>
-                    <li><strong>Warrant</strong> and <strong>ORY Hydra</strong> provide modern OAuth2/OIDC authentication, striking a balance between ease of use and cloud-native scalability, suitable for Flask’s evolving needs.</li>
-                    <li><strong>Apache Syncope</strong> shines in identity provisioning for Flask enterprises, offering robust REST APIs, though its setup complexity may challenge smaller teams.</li>
+                    <li><strong>Keycloak</strong>: A leading enterprise-grade IAM solution with full OAuth2, OIDC, and SAML support. Its flask-oidc integration ensures seamless Flask compatibility, and its scalability suits large-scale applications. <em>Verdict</em>: Ideal for enterprise Flask projects needing SSO and comprehensive IAM, though its Java-based setup requires more resources, making it less suitable for lightweight apps.</li>
+                    <li><strong>Gluu Server</strong>: Offers robust multi-protocol support (OAuth2, OIDC, SAML, UMA) and enterprise features like SSO. Flask integration via flask-oidc is straightforward, but its complex deployment may overwhelm small teams. <em>Verdict</em>: Best for large Flask enterprises needing advanced protocol support, but overkill for simple projects due to setup overhead.</li>
+                    <li><strong>Flask-RBAC</strong>: A lightweight, Python-native RBAC library embedded in Flask apps. Its simplicity and zero-cost deployment make it perfect for small projects. <em>Verdict</em>: Excellent for small Flask apps needing basic role-based access control, but lacks scalability and enterprise features for larger systems.</li>
+                    <li><strong>Casbin</strong>: A versatile authorization library supporting RBAC and ABAC, with Python-native Flask integration. It’s lightweight and free but limited in enterprise scalability. <em>Verdict</em>: Great for small to medium Flask projects requiring flexible authorization, but not suited for complex IAM needs.</li>
+                    <li><strong>Permify</strong>: A Zanzibar-inspired authorization system with REST API integration for Flask. It excels in fine-grained access control for distributed systems. <em>Verdict</em>: Perfect for Flask microservices needing scalable, advanced authorization, but its API-driven approach may add integration overhead for simple apps.</li>
+                    <li><strong>OpenFGA</strong>: Another Zanzibar-based authorization solution with REST/gRPC support, scalable for Flask microservices. <em>Verdict</em>: Strong for distributed Flask apps requiring fine-grained access control, though its setup complexity may deter smaller projects.</li>
+                    <li><strong>Warrant</strong>: Provides modern OAuth2/OIDC authentication with Flask compatibility via flask-oidc. Its cloud-native design suits scalable apps. <em>Verdict</em>: A solid choice for Flask projects needing modern authentication with moderate complexity, but less comprehensive than Keycloak for enterprise IAM.</li>
+                    <li><strong>ORY Hydra</strong>: A cloud-native OAuth2/OIDC provider with Flask SDK support. It balances ease of use and scalability. <em>Verdict</em>: Well-suited for cloud-native Flask apps prioritizing OAuth2/OIDC, but lacks the broader IAM features of Keycloak or Gluu Server.</li>
+                    <li><strong>Apache Syncope</strong>: Specializes in identity provisioning with REST API integration for Flask. Its enterprise focus is robust but complex. <em>Verdict</em>: Best for Flask enterprises needing identity provisioning, but its setup complexity makes it less ideal for smaller teams.</li>
                 </ul>
                 <h3>Flask Compatibility</h3>
-                <p><strong>Flask-RBAC</strong> and <strong>Casbin</strong> integrate effortlessly with Flask’s ecosystem, leveraging Python-native designs and libraries like SQLAlchemy. <strong>Keycloak</strong>, <strong>Gluu Server</strong>, and <strong>ORY Hydra</strong> connect via flask-oidc for OIDC support, while <strong>Permify</strong>, <strong>OpenFGA</strong>, and <strong>Apache Syncope</strong> rely on REST APIs, offering flexibility through HTTP clients like requests or httpx.</p>
+                <p><strong>Flask-RBAC</strong> and <strong>Casbin</strong> are Python-native, integrating directly with Flask’s ecosystem using decorators or SQLAlchemy. <strong>Keycloak</strong>, <strong>Gluu Server</strong>, <strong>Warrant</strong>, and <strong>ORY Hydra</strong> leverage flask-oidc for OIDC-based authentication, ensuring smooth Flask integration. <strong>Permify</strong>, <strong>OpenFGA</strong>, and <strong>Apache Syncope</strong> use REST APIs, compatible with Flask via HTTP clients like requests or httpx, offering flexibility but requiring additional setup.</p>
+                <h3>Most Suitable Product</h3>
+                <p><strong>Keycloak</strong> is the most suitable product for most Flask projects. Its enterprise-grade IAM features, including SSO, OAuth2, OIDC, and SAML support, address a wide range of use cases. Flask integration via flask-oidc is seamless, and its scalability supports both small and large applications. While its Java-based deployment is more complex than lightweight options like Flask-RBAC, its robust documentation, active community (~27k GitHub stars), and enterprise support make it a reliable choice. For cost-sensitive small projects, Flask-RBAC or Casbin may suffice, but Keycloak’s versatility makes it the top pick for balancing compatibility, scalability, and feature robustness.</p>
                 <h3>Recommendations</h3>
                 <ul>
-                    <li><strong>Small-Scale Projects</strong>: Opt for <strong>Flask-RBAC</strong> (simple RBAC, zero cost) or <strong>Casbin</strong> (versatile authorization, Python-first) for rapid, lightweight implementations.</li>
-                    <li><strong>Enterprise Applications</strong>: Choose <strong>Keycloak</strong> or <strong>Gluu Server</strong> for full-featured IAM, SSO, and enterprise-grade support, despite their steeper setup curve.</li>
-                    <li><strong>Scalable Authorization Needs</strong>: Select <strong>Permify</strong> or <strong>OpenFGA</strong> for advanced, distributed access control in Flask microservices.</li>
-                    <li><strong>Modern Authentication</strong>: Use <strong>Warrant</strong> or <strong>ORY Hydra</strong> for cutting-edge OAuth2/OIDC solutions in cloud-native Flask deployments.</li>
+                    <li><strong>Small-Scale Projects</strong>: Choose <strong>Flask-RBAC</strong> for simple RBAC or <strong>Casbin</strong> for flexible authorization. Both are lightweight, Python-native, and free, ideal for rapid development with minimal setup.</li>
+                    <li><strong>Enterprise Applications</strong>: Select <strong>Keycloak</strong> (top choice) or <strong>Gluu Server</strong> for comprehensive IAM, SSO, and enterprise-grade scalability, despite higher setup complexity.</li>
+                    <li><strong>Scalable Authorization Needs</strong>: Opt for <strong>Permify</strong> or <strong>OpenFGA</strong> for advanced, Zanzibar-inspired access control in Flask microservices, offering high scalability.</li>
+                    <li><strong>Modern Authentication</strong>: Use <strong>Warrant</strong> or <strong>ORY Hydra</strong> for cloud-native OAuth2/OIDC solutions, balancing ease of use with scalability for Flask deployments.</li>
                 </ul>
                 <h3>Conclusion</h3>
-                <p>For small, cost-sensitive Flask projects, <strong>Flask-RBAC</strong> or <strong>Casbin</strong> are top picks. Enterprises should lean toward <strong>Keycloak</strong> or <strong>Gluu Server</strong> for robust IAM. For scalable authorization, <strong>Permify</strong> or <strong>OpenFGA</strong> excel, while <strong>Warrant</strong> and <strong>ORY Hydra</strong> lead in modern authentication. Assess your project’s size, technical demands, and budget to choose the best fit.</p>
+                <p><strong>Keycloak</strong> stands out as the most versatile solution for Flask projects, offering unmatched IAM features, scalability, and Flask compatibility via flask-oidc. Small projects can rely on <strong>Flask-RBAC</strong> or <strong>Casbin</strong> for simplicity and cost savings. Enterprises with complex needs may consider <strong>Gluu Server</strong> or <strong>Apache Syncope</strong>, while <strong>Permify</strong> and <strong>OpenFGA</strong> excel in scalable authorization, and <strong>Warrant</strong> and <strong>ORY Hydra</strong> suit modern authentication. Evaluate your project’s size, technical requirements, and budget to select the optimal tool.</p>
             </div>
         </div>
     </div>
 
-    <footer class="bg-light text-center py-3 mt-4">
-        <p>Last updated: May 15, 2025</p>
+    <footer class="text-center py-3 mt-4">
+        <p>Last updated: May 16, 2025</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -166,7 +217,7 @@
                 logo: "https://casbin.org/img/casbin.svg",
                 website: { description: "<a href='https://casbin.org/' target='_blank'>Casbin</a>", stars: "" },
                 github: { description: "<a href='https://github.com/casbin/casbin/' target='_blank'>Casbin GitHub</a>", stars: "" },
-                primaryFunction: { description: "Authorization library for RBAC/ABAC, Flask-friendly.", stars: "" },
+                primaryFunction: { description: "Authorization library for RBAC/ABAC, Flask-friendly.",emote: "" },
                 protocolSupport: { description: "Library-based, Flask route integration.", stars: "★★☆☆☆" },
                 deployment: { description: "Embedded in Flask, no external setup.", stars: "★★★★★" },
                 language: { description: "Python support, ideal for Flask.", stars: "★★★★★" },
@@ -405,6 +456,27 @@
 
         renderCards(toolsData);
         renderTable(toolsData);
+
+        function toggleTheme() {
+            const body = document.body;
+            const isDarkMode = body.classList.toggle('dark-mode');
+            const themeIcon = document.getElementById('themeIcon');
+            themeIcon.className = isDarkMode ? 'bi bi-moon-fill' : 'bi bi-sun-fill';
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
+
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('themeIcon');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeIcon.className = 'bi bi-moon-fill';
+            } else {
+                themeIcon.className = 'bi bi-sun-fill';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', applySavedTheme);
     </script>
 </body>
 </html>
